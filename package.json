@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "prestart": "tsc && cd client && npm run build",
+    "start": "node build/server.js"
   },
   "author": "Nathan Chan",
   "license": "MIT",
@@ -18,5 +19,15 @@
     "helmet": "^3.19.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.5"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.0",
+    "@types/express-jwt": "0.0.42",
+    "@types/express-rate-limit": "^3.3.1",
+    "@types/helmet": "0.0.43",
+    "@types/jsonwebtoken": "^8.3.3",
+    "@types/mongoose": "^5.5.12"
   }
 }

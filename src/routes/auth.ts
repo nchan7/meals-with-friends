@@ -1,28 +1,30 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router(); 
-const User = require('../models/user');
-const jwt = require('jsonwebtoken'); 
+import User, {IUser} from '../models/user';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config()
+
 
 //* Route for signup
 router.post('/signup', (req, res) => {
     //: see if email is already in database
-    User.findOne({emai: req.body.email}, (err, user) => {
+    User.findOne({emai: req.body.email}, (err, user: IUser) => {
         if (user) {
             //: if yes, return an error 
             res.json({type: 'error', message: 'Email already exists'})
         } else {
             //: if no, create the user in the database
-            let user = new User({
-                name: req. body.name, 
+            User.create({
+                name: req.body.name, 
                 email: req.body.email, 
                 password: req.body.password
-            });
-            user.save( (err, user) => {
+            }, (err, user) => {
                 if (err) {
                     res.json({type: 'error', message: 'Database error creating user'}) //* Don't be so specific with errors 
                 } else {
                     //: sign a token (this is the login step)
-                    var token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
+                    var token = jwt.sign(user.toObject(), process.env.JWT_SECRET as string, {
                         expiresIn: '1d'
                     })
                     //* not controlling where the frontend goes to in the backend...no redirect
@@ -40,7 +42,7 @@ router.post('/signup', (req, res) => {
 //* Route for login
 router.post('/login', (req, res) => {
     // Find User in db by email
-    User.findOne({email: req.body.email}, (err, user) => {
+    User.findOne({email: req.body.email}, (err, user: IUser) => {
         if (!user) {
             res.json({type: 'error', message: 'Account not found'})
             // if there is no user, return error
@@ -48,7 +50,7 @@ router.post('/login', (req, res) => {
             // if user, check authentication
             if(user.authenticated(req.body.password)) {
                 // if autenticatd, sign a token (login)
-                var token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
+                var token = jwt.sign(user.toObject(), process.env.JWT_SECRET as string, {
                     expiresIn: '1d'
                 })
                 // return the token to be saved by the browser
@@ -71,13 +73,13 @@ router.post('/me/from/token', (req, res) => {
         res.json({type: 'error', message: 'You must submit a valid token'})
     } else {
         // if token, verify it
-        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        jwt.verify(token, process.env.JWT_SECRET as string, (err, user: IUser) => {
             if (err) {
                 // if token invalid, return error
                 res.json({type: 'error', message: 'Invalid token. Please login again.'})
             } else {
                 // if token is valid, look up user in the db
-                User.findById(user._id, (err, user) => {
+                User.findById(user._id, (err, user: IUser) => {
                     // if user doesn't exist, return error
                     if (err) {
                         res.json({type: 'error', message: 'Database error during validation'})
@@ -100,4 +102,4 @@ router.post('/me/from/token', (req, res) => {
 }) 
 
 
-module.exports = router; 
+export default router; 

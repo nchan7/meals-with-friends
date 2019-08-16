@@ -1,50 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Login from './Login';
 import Signup from './Signup';
+import User, {IUser} from '../../src/models/user';
+
+const App: React.FC = () => {
+  const [token, setToken] = useState<String>('')
+  const [user, setUser] = useState<IUser>({} as IUser)
+  const [errorMessage, setErrorMessage] = useState('')
+  // const [apiData, setapiData] = useState('')
 
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      token: '',
-      user: null,
-      errorMessage: '',
-      apiData: null
-    }
-    this.checkForLocalToken = this.checkForLocalToken.bind(this) //* May not be necessary since we're not passing it down...but can't hurt
-    this.liftToken = this.liftToken.bind(this) 
-    this.logout = this.logout.bind(this) 
-  }
 
-  checkForLocalToken() {
+  function checkForLocalToken() {
     var token = localStorage.getItem('mernToken'); //* localStorage lives in the browser...mernToken is key in localStorage
     if (!token || token === 'undefined') {
       // token is invalid or missing
       localStorage.removeItem('mernToken');
-      this.setState({
-        token: '',
-        user: null
-      })
+      setToken('');
+      setUser({} as IUser);
     } else {
       // found a token in localStorage; verify it
       axios.post('/auth/me/from/token', {token})
         .then(res => {
           if(res.data.type === 'error') {
             localStorage.removeItem('mernToken');
-            this.setState({
-              token: '', 
-              user: null,
-              errorMessage: res.data.message
-            })
+            
+              setToken('');
+              setUser({} as IUser);
+              setErrorMessage(res.data.message); 
           } else {
             localStorage.setItem('mernToken', res.data.token);
-            this.setState({
-              token: res.data.token,
-              user: res.data.user,
-              errorMessage: ''
-            })
+              setToken(res.data.token);
+              setUser(res.data.user);
+              setErrorMessage('');
+            
           }
         })
     }
@@ -58,29 +48,26 @@ class App extends React.Component {
   // }
 
   //* Object Destructuring! 
-  liftToken({token, user}) {
+  function liftToken({token, user}) {
     this.setState({
       token,
       user
     })
   }
 
-  logout() {
+  function logout() {
     // Remove token from localStorage
     localStorage.removeItem('mernToken');
     // Remove user and token from state
-    this.setState({
-      token: '',
-      user: null
-    })
+    setToken('')
+    setUser({} as IUser)
+    
   }
 
-  componentDidMount() {
-    this.checkForLocalToken()
-  }
+  useEffect(() => {
+    checkForLocalToken()
+  }, [token])
 
-  render() {
-    var user = this.state.user
     console.log(user);
     var contents 
     if (user) {
@@ -102,7 +89,7 @@ class App extends React.Component {
     return (
         contents
     );
-  }
+  
 }
 
 export default App;

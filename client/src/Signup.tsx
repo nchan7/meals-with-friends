@@ -14,6 +14,7 @@ class Signup extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    //* Will need to separate this out in Typescript
     handleInputChange(e) {
         this.setState({
             [e.target.name]: e.target.value

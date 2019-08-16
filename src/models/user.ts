@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: {
         type: String,
         required: [true, 'You must enter a name'],
@@ -19,8 +19,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'You must enter an email'],
         minlength: [5, 'Email must be between 5 and 99 characters'],
         maxlength: [99, 'Password must be between 5 and 99 characters']
-    }
-    
+    },
+    friends: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
+
 });
 
 //* Strip out password
@@ -40,18 +42,44 @@ userSchema.set('toObject', {
 
 //* Hash password before passing to database
 userSchema.pre('save', function(next) { //! Save operation is not the same every time...save even when update...so need to check if it's new! Otherwise we'll hash even with an update
-    if (this.isNew) {
-        let hash = bcrypt.hashSync(this.password, 12);
-        this.password = hash;
+    if (this.isNew) {        
+        let hash = bcrypt.hashSync(this.get('password'), 12);
+        this.set('password', hash)
     }
     next(); //! remember to call next otherwise it won't save your record
 }) // before create hook in Mongoose
 
+// userSchema.pre('save', function(next) {
+//     console.log(this.get('password'));
+//     if(!this.isModified('password')) {
+//         return next();
+//     }
+//     let plaintext = this.get('password');
+//     this.set('password', bcrypt.hashSync(plaintext, 12));
+//     next();
+//     });
+
 //* Valid password? Check Authentication
-userSchema.methods.authenticated = function(password) {
-    return bcrypt.compareSync(password, this.password) //password = user typed and //this.password = hashed password
+userSchema.methods.authenticated = function(password: string) {
+    return bcrypt.compareSync(password, this.get('password')) //password = user typed and //this.password = hashed password
 }
 
-module.exports = mongoose.model('User', userSchema);
+//* Code from Kelsey Cox
 
+interface IAuthenticated {
+    (password: string): boolean
+}
+interface IModelToObject {
+    (): IUser
+}
+export interface IUser {
+    _id?: string;
+    name: string;
+    email: string;
+    password: string;
+    authenticated: IAuthenticated;
+    toObject: IModelToObject;
+}
+
+export default mongoose.model('User', userSchema); 
 

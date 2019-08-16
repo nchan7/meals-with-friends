@@ -1,11 +1,11 @@
 {
-  "name": "jwt-auth-boilerplate",
+  "name": "meals-with-friends",
   "version": "1.0.0",
-  "description": "JWT Authentication Example with React",
+  "description": "Using JWT Authentication Example with React",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "tsc && cd client && npm run build",
+    "prestart": "tsc",
     "start": "node build/server.js"
   },
   "author": "Nathan Chan",

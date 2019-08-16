@@ -1,5 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import {ILiftToken} from './App'; 
+
+//* component written with the help of Kelsey Cox - https://github.com/kelcc169/jwt-auth-typescript/blob/master/client/src/Signup.tsx
+
 
 class Signup extends React.Component {
     constructor(props) {

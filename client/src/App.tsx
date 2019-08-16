@@ -4,6 +4,12 @@ import Login from './Login';
 import Signup from './Signup';
 import User, {IUser} from '../../src/models/user';
 
+
+export interface ILiftToken {
+  setToken: Function 
+}
+
+
 const App: React.FC = () => {
   const [token, setToken] = useState<String>('')
   const [user, setUser] = useState<IUser>({} as IUser)
@@ -12,7 +18,58 @@ const App: React.FC = () => {
 
 
 
-  function checkForLocalToken() {
+  // function checkForLocalToken() {
+  //   var token = localStorage.getItem('mernToken'); //* localStorage lives in the browser...mernToken is key in localStorage
+  //   if (!token || token === 'undefined') {
+  //     // token is invalid or missing
+  //     localStorage.removeItem('mernToken');
+  //     setToken('');
+  //     setUser({} as IUser);
+  //   } else {
+  //     // found a token in localStorage; verify it
+  //     axios.post('/auth/me/from/token', {token})
+  //       .then(res => {
+  //         if(res.data.type === 'error') {
+  //           localStorage.removeItem('mernToken');
+            
+  //             setToken('');
+  //             setUser({} as IUser);
+  //             setErrorMessage(res.data.message); 
+  //         } else {
+  //           localStorage.setItem('mernToken', res.data.token);
+  //             setToken(res.data.token);
+  //             setUser(res.data.user);
+  //             setErrorMessage('');
+            
+  //         }
+  //       })
+  //   }
+  // }
+
+  // liftToken(data) {
+  //   this.setState({
+  //     token: data.token,
+  //     user: data.user
+  //   })
+  // }
+
+  //* Object Destructuring! 
+  
+  // function liftToken(token: string) {
+  //   setToken(token) 
+  // }
+
+  function logout() {
+    // Remove token from localStorage
+    localStorage.removeItem('mernToken');
+    // Remove user and token from state
+    setToken('')
+    setUser({} as IUser)
+    
+  }
+
+  useEffect(() => {
+    // checkForLocalToken()
     var token = localStorage.getItem('mernToken'); //* localStorage lives in the browser...mernToken is key in localStorage
     if (!token || token === 'undefined') {
       // token is invalid or missing
@@ -38,34 +95,6 @@ const App: React.FC = () => {
           }
         })
     }
-  }
-
-  // liftToken(data) {
-  //   this.setState({
-  //     token: data.token,
-  //     user: data.user
-  //   })
-  // }
-
-  //* Object Destructuring! 
-  function liftToken({token, user}) {
-    this.setState({
-      token,
-      user
-    })
-  }
-
-  function logout() {
-    // Remove token from localStorage
-    localStorage.removeItem('mernToken');
-    // Remove user and token from state
-    setToken('')
-    setUser({} as IUser)
-    
-  }
-
-  useEffect(() => {
-    checkForLocalToken()
   }, [token])
 
     console.log(user);
@@ -81,8 +110,8 @@ const App: React.FC = () => {
       contents = (
         <>
           <p>Please signup or login</p>
-          <Login liftToken={this.liftToken} />
-          <Signup liftToken={this.liftToken} />
+          <Login setToken={setToken} />
+          <Signup setToken={setToken} />
         </>
       );
     }

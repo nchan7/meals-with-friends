@@ -1,80 +1,74 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import {ILiftToken} from './App'; 
 
 //* component written with the help of Kelsey Cox - https://github.com/kelcc169/jwt-auth-typescript/blob/master/client/src/Signup.tsx
 
 
-class Signup extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: '',
-            email: '',
-            password: '',
-            message: ''
-        }
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
+const Signup: React.FC<ILiftToken> = ({setToken}) => {
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
     //* Will need to separate this out in Typescript
-    handleInputChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setName(e.target.value)
     }
 
-    handleSubmit(e) {
+    function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setEmail(e.target.value)     
+    }
+
+    function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        setPassword(e.target.value) 
+    }
+
+    function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
         axios.post('/auth/signup', {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password
+            name: name,
+            email: email,
+            password: password
         }).then(res => {
             if (res.data.type === 'error') {
-                this.setState({
-                    name: '',
-                    email: '',
-                    password: '',
-                    message: res.data.message
-                })
+                    setName('');
+                    setEmail('');
+                    setPassword('');
+                    setMessage(res.data.message); 
             } else {
                 localStorage.setItem('mernToken', res.data.token)
-                this.props.liftToken(res.data)
+                setToken(res.data.token)
             }
         }).catch(err => {
-            this.setState({
-                message: 'Maximum accounts exceeded. Please try again later.'
-            })
+            setMessage('Maximum accounts exceeded. Please try again later.') 
         })
     }
 
-    render() {
-        return (
-            <div className='Signup'>
-                <h3>Create a new account:</h3>
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleInputChange}
-                            value={this.state.name}
-                            type='text'
-                            name='name'
-                            placeholder='Enter your name...'/> <br/>
-                    <input onChange={this.handleInputChange}
-                            value={this.state.email}
-                            type='email'
-                            name='email'
-                            placeholder='Enter your email...'/> <br/>
-                    <input onChange={this.handleInputChange}
-                            value={this.state.password}
-                            type='password'
-                            name='password'
-                            placeholder='Choose a password...'/> <br/>
-                    <input type="submit" value='Sign up!'/>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div className='Signup'>
+            <h3>Create a new account:</h3>
+            <form onSubmit={handleSubmit}>
+                <input onChange={handleNameChange}
+                        value={name}
+                        type='text'
+                        name='name'
+                        placeholder='Enter your name...'/> <br/>
+                <input onChange={handleEmailChange}
+                        value={email}
+                        type='email'
+                        name='email'
+                        placeholder='Enter your email...'/> <br/>
+                <input onChange={handlePasswordChange}
+                        value={password}
+                        type='password'
+                        name='password'
+                        placeholder='Choose a password...'/> <br/>
+                <input type="submit" value='Sign up!'/>
+            </form>
+        </div>
+    );
+    
 }
 
 export default Signup; 

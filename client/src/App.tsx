@@ -16,43 +16,6 @@ const App: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
   // const [apiData, setapiData] = useState('')
 
-
-
-  // function checkForLocalToken() {
-  //   var token = localStorage.getItem('mernToken'); //* localStorage lives in the browser...mernToken is key in localStorage
-  //   if (!token || token === 'undefined') {
-  //     // token is invalid or missing
-  //     localStorage.removeItem('mernToken');
-  //     setToken('');
-  //     setUser({} as IUser);
-  //   } else {
-  //     // found a token in localStorage; verify it
-  //     axios.post('/auth/me/from/token', {token})
-  //       .then(res => {
-  //         if(res.data.type === 'error') {
-  //           localStorage.removeItem('mernToken');
-            
-  //             setToken('');
-  //             setUser({} as IUser);
-  //             setErrorMessage(res.data.message); 
-  //         } else {
-  //           localStorage.setItem('mernToken', res.data.token);
-  //             setToken(res.data.token);
-  //             setUser(res.data.user);
-  //             setErrorMessage('');
-            
-  //         }
-  //       })
-  //   }
-  // }
-
-  // liftToken(data) {
-  //   this.setState({
-  //     token: data.token,
-  //     user: data.user
-  //   })
-  // }
-
   //* Object Destructuring! 
   
   // function liftToken(token: string) {

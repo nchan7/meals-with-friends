@@ -64,7 +64,7 @@ userSchema.methods.authenticated = function(password: string) {
     return bcrypt.compareSync(password, this.get('password')) //password = user typed and //this.password = hashed password
 }
 
-//* Code from Kelsey Cox
+//* code sourced from Kelsey Cox
 
 interface IAuthenticated {
     (password: string): boolean

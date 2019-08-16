@@ -13,8 +13,7 @@ const Login: React.FC<ILiftToken> = ({setToken}) => {
 
 
     function handleEmailChange(e: React.ChangeEvent<HTMLInputElement>) { //* Since these are text boxes no need for e.preventDefault
-        setEmail(e.target.value) 
-        
+        setEmail(e.target.value)     
     }
 
     function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) { //* Since these are text boxes no need for e.preventDefault

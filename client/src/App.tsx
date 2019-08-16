@@ -62,11 +62,11 @@ const App: React.FC = () => {
 
     console.log(user);
     var contents 
-    if (user) {
+    if (Object.keys(user).length > 0) {
       contents = (
         <>
           <p>Hello, {user.name}</p>
-          <p onClick={this.logout}>Logout!</p>
+          <p onClick={logout}>Logout!</p>
         </>
       );
     } else {

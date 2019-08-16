@@ -25,7 +25,7 @@ app.use(helmet());
 //     message: 'Maximum accounts created. Please try again later.'
 // })
 
-mongoose.connect('mongodb://localhost/jwtAuth', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI as string, {useNewUrlParser: true});
 const db = mongoose.connection; 
 db.once('open', () => {
     console.log(`Connected to Mongo on probably the right port...🚢`);
@@ -37,8 +37,12 @@ db.on('error', (err) => {
 // app.use('/auth/login', loginLimiter); //! Commented out for testing
 // app.use('/auth/signup', signupLimiter);
 
-app.use('/auth', require('./routes/auth'));
-app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), require('./routes/api'));
+import authRouter from './routes/auth';
+
+app.use('/auth', authRouter);
+
+import apiRouter from './routes/api';
+app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), apiRouter);
 //* Can include .unless to lock everything except certain verb: ".unless({method: 'POST'})"
 
 app.listen(process.env.PORT, () => {

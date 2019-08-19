@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
 import User, {IUser} from '../../src/models/user';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+import './App.css'
 
 
 export interface ILiftToken {
@@ -73,13 +80,25 @@ const App: React.FC = () => {
       contents = (
         <>
           <p>Please signup or login</p>
-          <Login setToken={setToken} />
-          <Signup setToken={setToken} />
+          {/* <Login setToken={setToken} />
+          <Signup setToken={setToken} /> */}
         </>
       );
     }
     return (
-        contents
+      <div className="App">
+        <Router>
+          <nav>
+            <Link to='/' className='link'>Home</Link>
+            <Link to='/login' className='link'>Login</Link>
+            <Link to='/signup' className='link'>Signup</Link>
+          </nav>
+          <Route exact path='/' component = {Home}/>
+        {/* {contents} */}
+          <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
+          <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>
+        </Router>
+      </div>
     );
   
 }

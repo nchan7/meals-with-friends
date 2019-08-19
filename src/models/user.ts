@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, {Schema, Document, Mongoose} from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new Schema({
@@ -72,11 +72,22 @@ interface IAuthenticated {
 interface IModelToObject {
     (): IUser
 }
-export interface IUser {
+
+export interface IReview {
     _id?: string;
+    review: string;
+}
+
+interface IFriend {
+}
+
+export interface IUser extends mongoose.Document{
+    _id: string;
     name: string;
     email: string;
     password: string;
+    friends: IFriend;
+    reviews: Array<IReview>;
     authenticated: IAuthenticated;
     toObject: IModelToObject;
 }

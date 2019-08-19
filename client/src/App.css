@@ -1,5 +1,27 @@
+body {
+  text-align: center;
+  margin: 0 auto; 
+}
+
+nav {
+  text-align: right; 
+  margin: 5px;
+}
+
+.link {
+  margin: 5px 10px; 
+  color: white; 
+  background-color: rgba(100, 100, 100, .9);
+  border: 1px solid white; 
+}
+
+.link:hover { 
+  background-color: black; 
+}
+
 .App {
   text-align: center;
+  margin: 0 auto; 
 }
 
 .App-logo {

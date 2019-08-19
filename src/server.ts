@@ -38,12 +38,14 @@ db.on('error', (err) => {
 // app.use('/auth/signup', signupLimiter);
 
 import authRouter from './routes/auth';
-
 app.use('/auth', authRouter);
 
-import apiRouter from './routes/api';
-app.use('/api', expressJWT({secret: process.env.JWT_SECRET}), apiRouter);
+import restaurantRouter from './routes/restaurant';
+app.use('/restaurant', expressJWT({secret: process.env.JWT_SECRET}), restaurantRouter);
 //* Can include .unless to lock everything except certain verb: ".unless({method: 'POST'})"
+
+import reviewRouter from './routes/review';
+app.use('/reviews', expressJWT({secret: process.env.JWT_SECRET}), reviewRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`You're listening to port ${process.env.PORT}...`)

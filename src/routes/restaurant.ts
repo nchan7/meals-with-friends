@@ -14,29 +14,32 @@ const geocodingClient = mapbox({accessToken: process.env.MAPBOX_PUBLIC_KEY});
 
 router.use(express.urlencoded({extended: false}));
 
-// GET ALL restaurants from Zomato API 
-router.get('/', (req, res) => {
-    let location = req.body
+// POST search results and GET ALL restaurants from Zomato API 
+router.post('/', (req, res) => {
+    let location = req.body.search
     geocodingClient.forwardGeocode({
       query: location
       }).send().then( function(response) {   
           var lat = response.body.features[0].center[1];
           var lon = response.body.features[0].center[0];
-    
-    let zomatoUrl = `https://developers.zomato.com/api/v2.1/search?lat=${lat}&lon=${lon}`
-    let config = {
-      headers: {
-        'user-key': process.env.ZOMATO_KEY
-      }
-    }
-    axios.get(zomatoUrl, config).then(results => {
-      console.log('Getting my API')
-      res.json({results})
-    }).catch(err => {
-      console.log(err)
-    })
-      // res.json({type: 'success', message: 'You accessed the protected api routes'})
-  });
+          console.log(lat)
+          console.log(lon)
+          let zomatoUrl = `https://developers.zomato.com/api/v2.1/search?lat=${lat}&lon=${lon}`
+          let config = {
+            headers: {
+              'Accept': 'application/json',
+              'user-key': process.env.ZOMATO_KEY
+            }
+          }
+          axios.get(zomatoUrl, config).then(results => {
+            console.log('Getting my API')
+            console.log(results.data.restaurants)
+            res.json(results.data.restaurants)
+          }).catch(err => {
+            console.log(err)
+          })
+            // res.json({type: 'success', message: 'You accessed the protected api routes'})
+      });
 });
 
 

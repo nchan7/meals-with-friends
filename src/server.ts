@@ -41,7 +41,7 @@ import authRouter from './routes/auth';
 app.use('/auth', authRouter);
 
 import restaurantRouter from './routes/restaurant';
-app.use('/restaurant', expressJWT({secret: process.env.JWT_SECRET}), restaurantRouter);
+app.use('/restaurants', expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}), restaurantRouter);
 //* Can include .unless to lock everything except certain verb: ".unless({method: 'POST'})"
 
 import reviewRouter from './routes/review';

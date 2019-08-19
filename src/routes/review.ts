@@ -63,14 +63,14 @@ router.post('/', (req, res) => {
 
 // UPDATE review for a user
 router.put('/:id', (req, res) => {
-    console.log("Hitting the PUT new trip route");
+    console.log("Hitting the PUT review route");
     Review.findByIdAndUpdate(req.params.id, 
         {
             review: req.body.review
         },{new: true}, 
-        function(err, trip) {
+        function(err, review) {
             if (err) res.json(err)
-            res.json({trip})
+            res.json({review})
         })
 })
     

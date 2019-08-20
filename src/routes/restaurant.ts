@@ -45,14 +45,20 @@ router.post('/search', (req, res) => {
 
 // POST restaurant to database
 router.post('/', (req, res) => {
-  Review.create({
-    restaurant_id: req.body.api_id,
-    name: req.body.name,
-  },
-  function(err, restaurant: IRestaurant) {
-      console.log("restaurant created", restaurant)
-      restaurant.save()
-      res.json(restaurant) 
+  Restaurant.findOne({api_id: req.body.api_id}, function(err, result) {
+    if (!result) {
+      Restaurant.create({
+        restaurant_id: req.body.api_id,
+        name: req.body.name,
+      },
+      function(err, restaurant: IRestaurant) {
+          console.log("restaurant created", restaurant)
+          restaurant.save()
+          res.json(restaurant) 
+      })
+    } else {
+      console.log('Already in database')
+    }
   })
 })
 

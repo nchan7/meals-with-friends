@@ -47,9 +47,9 @@ const Home: React.FC = () => {
       })
   }
 
-  function handleRestaurantSubmit(id: Number, name: String) {
+  function handleRestaurantSubmit(api_id: number, name: String) {
     axios.post('/restaurants', {
-      api_id: id,
+      api_id: api_id,
       name: name
     }).then(res => {
       console.log(res.data)
@@ -61,14 +61,14 @@ const Home: React.FC = () => {
 
   var restaurantData;
   if (restaurants !==null && Object.keys(restaurants).length > 0) {
-    restaurantData = restaurants.map((restaurant, id: number) => {
+    restaurantData = restaurants.map((restaurant, i) => {
       return (
-        <div className='restaurant'>
-          <h3 key={id}>{restaurant.restaurant.name}</h3>
-          <h4 key={id}>Address: {restaurant.restaurant.location.address}</h4>
-          <h4 key={id}>Hours: {restaurant.restaurant.timings}</h4>
-          <h4 key={id}>{restaurant.restaurant.cuisines}</h4>
-          <p key={id}>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
+        <div key={i} className='restaurant'>
+          <h3>{restaurant.restaurant.name}</h3>
+          <h4>Address: {restaurant.restaurant.location.address}</h4>
+          <h4>Hours: {restaurant.restaurant.timings}</h4>
+          <h4>{restaurant.restaurant.cuisines}</h4>
+          <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
           <Link to="/review"><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>Add a Review</button></Link>  <br/> <br/>
         </div>
       )
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
   }
 
   return(
-    <div>
+    <>
       <h3>Where would you like to eat today?</h3>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearchChange}
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
         <input type="submit" value="Go!" />
       </form>
       {restaurantData}
-    </div>
+    </>
   );
 }
 

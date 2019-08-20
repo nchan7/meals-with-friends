@@ -94,7 +94,7 @@ const App: React.FC = () => {
             <Link to='/login' className='link'>Login</Link>
             <Link to='/signup' className='link'>Signup</Link>
           </nav>
-          <Route exact path='/' component = {Home}/>
+          <Route exact path='/' component={Home}/>
         {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>

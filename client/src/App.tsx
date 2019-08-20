@@ -3,7 +3,7 @@ import axios from 'axios';
 import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
-import Review from './Review';
+import Details from './Details';
 import User, {IUser} from '../../src/models/user';
 import {
   BrowserRouter as Router,
@@ -98,7 +98,7 @@ const App: React.FC = () => {
         {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>
-          <Route exact path='/review' render={(props) => <Review />}/>
+          <Route exact path='/details' render={(props) => <Details />}/>
         </Router>
       </div>
     );

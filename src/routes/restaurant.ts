@@ -46,6 +46,7 @@ router.post('/search', (req, res) => {
 // POST restaurant to database
 router.post('/', (req, res) => {
   Restaurant.findOne({api_id: req.body.api_id}, function(err, result) {
+    console.log("found it", result)
     if (!result) {
       Restaurant.create({
         api_id: req.body.api_id,
@@ -59,6 +60,24 @@ router.post('/', (req, res) => {
     } else {
       console.log('Already in database')
     }
+  })
+})
+
+
+router.get('/:id', (req, res) => {
+  let zomatoUrl = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${req.params.id}`
+  let config = {
+    headers: {
+      'Accept': 'application/json',
+      'user-key': process.env.ZOMATO_KEY
+    }
+  }
+  axios.get(zomatoUrl, config).then(results => {
+    console.log('Getting my API')
+    console.log(results.data)
+    res.json(results.data)
+  }).catch(err => {
+    console.log(err)
   })
 })
 

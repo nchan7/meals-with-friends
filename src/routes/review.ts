@@ -43,7 +43,6 @@ router.post('/', (req, res) => {
     console.log("Hitting the POST new review route");
     console.log(req.body)
     console.log((<any>req).user._id)
-    // console.log("locStart", locStart)
     Restaurant.findById(req.body.restaurant_id, function(err, restaurant: IRestaurant) {
         User.findById((<any>req).user._id, function(err, user: IUser){
             console.log("We got the user")

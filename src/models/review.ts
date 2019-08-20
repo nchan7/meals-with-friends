@@ -6,7 +6,7 @@ const reviewSchema = new Schema({
     review: String
 })
 
-export interface IReview extends mongoose.Document {
+export interface IReview extends Document {
     _id: string;
     restaurant_id: String;
     review: String;

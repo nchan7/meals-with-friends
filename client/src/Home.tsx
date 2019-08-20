@@ -3,13 +3,14 @@ import {
     Link
     } from 'react-router-dom';
 import axios from 'axios';
+import { number } from 'prop-types';
 
 export interface ILocation {
   // name: string;
-  restaurant: IRestaurant;
+  restaurant: IRestaurantData;
 }
 
-interface IRestaurant {
+interface IRestaurantData {
   id: number;
   name: string;
   location: IAddress;
@@ -22,13 +23,11 @@ interface IAddress {
   address: string;
 }
 
-interface IReviewProps {
-
-}
 
 const Home: React.FC = () => { 
   const [search, setSearch] = useState<string>('')
   const [restaurants, setRestaurants] = useState<ILocation[]>([])
+  const [api_id, setApi_id] = useState<number>(0)
 
 
   function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,6 +47,7 @@ const Home: React.FC = () => {
   }
 
   function handleRestaurantSubmit(api_id: number, name: String) {
+    setApi_id(api_id)
     axios.post('/restaurants', {
       api_id: api_id,
       name: name
@@ -69,7 +69,7 @@ const Home: React.FC = () => {
           <h4>Hours: {restaurant.restaurant.timings}</h4>
           <h4>{restaurant.restaurant.cuisines}</h4>
           <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
-          <Link to="/review"><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>Add a Review</button></Link>  <br/> <br/>
+          <Link to={{pathname: "/details", state:{api_id: api_id}}}><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
         </div>
       )
     })

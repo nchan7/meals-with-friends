@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 import User, {IUser} from '../models/user';
-import Restaurant from '../models/restaurant';
+import Restaurant, {IRestaurant} from '../models/restaurant';
 import Review from '../models/review';
 import mapbox from '@mapbox/mapbox-sdk/services/geocoding';
 
@@ -15,7 +15,7 @@ const geocodingClient = mapbox({accessToken: process.env.MAPBOX_PUBLIC_KEY});
 router.use(express.urlencoded({extended: false}));
 
 // POST search results and GET ALL restaurants from Zomato API 
-router.post('/', (req, res) => {
+router.post('/search', (req, res) => {
     let location = req.body.search
     geocodingClient.forwardGeocode({
       query: location
@@ -42,6 +42,19 @@ router.post('/', (req, res) => {
       });
 });
 
+
+// POST restaurant to database
+router.post('/', (req, res) => {
+  Review.create({
+    restaurant_id: req.body.api_id,
+    name: req.body.name,
+  },
+  function(err, restaurant: IRestaurant) {
+      console.log("restaurant created", restaurant)
+      restaurant.save()
+      res.json(restaurant) 
+  })
+})
 
 // // // GET ALL reviews for a restaurant
 // // router.get('/', (req, res) => {
@@ -77,62 +90,6 @@ router.post('/', (req, res) => {
 
 // });
 
-
-// // POST trip for a user - TESTING MAPBOX CONVERSION of zip to lat/long
-// router.post('/', (req, res) => {
-//     console.log(req.body)
-//     console.log(req.user._id)
-//     // console.log("Hitting the POST new trip route");
-//     let locStart = req.body.zipStart; 
-//     // console.log("locStart", locStart)
-//     geocodingClient.forwardGeocode({
-//     query: locStart
-//     }).send().then( function(response) {
-//         var latStartFromZip = response.body.features[0].center[1];
-//         var longStartFromZip = response.body.features[0].center[0];
-//         // console.log("We got the start lat long")
-
-//         let locDest = req.body.zipDest;
-//         console.log('locDest', locDest)
-//         geocodingClient.forwardGeocode({
-//             query: locDest
-//         }).send().then( function(response) {
-//             // console.log("We got the return lat long")
-//             var latDestFromZip = response.body.features[0].center[1];
-//             var longDestFromZip = response.body.features[0].center[0];
-        
-//             // let startDate = new Date(req.body.startTime);
-            
-//             User.findById(req.user._id, function(err, user){
-//                 // console.log("We got the user")
-//                 Trip.create({
-//                     tripName: req.body.tripName,
-//                     zipStart: req.body.zipStart,
-//                     latStart: latStartFromZip,
-//                     longStart: longStartFromZip,
-//                     startTime: req.body.startTime,
-//                     travelTime: req.body.travelTime,
-//                     zipDest: req.body.zipDest,
-//                     latDest: latDestFromZip,
-//                     longDest: longDestFromZip,
-//                     returnTime: req.body.returnTime,
-//                     returnTravelTime: req.body.returnTravelTime
-//                 },
-//                 function(err, trip) {
-//                     // console.log("trip created", trip)
-//                     user.trips.push(trip)
-//                     user.save(function(err, user) {
-//                         // console.log('this is another user test: ', user)
-//                         if (err) console.log(err)
-//                         res.json(user) // return the trip id -AdamG
-//                     })
-//                 })
-//             })
-//         }).catch((err) =>  {
-//             // console.log("Mapbox problem!!!!!");
-//         });
-//     })
-// });
 
 // // UPDATE trip for a user
 // router.put('/:id', (req, res) => {

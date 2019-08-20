@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import axios from 'axios';
 
 import User, {IUser} from '../models/user';
-import Restaurant from '../models/restaurant';
-import Review from '../models/review';
+import Restaurant, {IRestaurant} from '../models/restaurant';
+import Review, {IReview} from '../models/review';
 import mapbox from '@mapbox/mapbox-sdk/services/geocoding';
 
 // const geocodingClient = mapbox({accessToken: process.env.MAPBOX_PUBLIC_KEY});
@@ -38,23 +38,26 @@ router.get('/:id', (req, res) => {
 });
 
 
-// POST review for a user - 
+// POST review for a user and restaurant- 
 router.post('/', (req, res) => {
-    console.log("Hitting the POST new trip route");
+    console.log("Hitting the POST new review route");
     console.log(req.body)
     console.log((<any>req).user._id)
     // console.log("locStart", locStart)
-    User.findById((<any>req).user._id, function(err, user: IUser){
-        console.log("We got the user")
-        Review.create({
-            review: req.body.review,
-        },
-        function(err, review) {
-            console.log("review created", review)
-            user.reviews.push(review)
-            user.save(function(err, user) {
-                // console.log('this is another user test: ', user)
-                if (err) console.log(err)
+    Restaurant.findById(req.body.restaurant_id, function(err, restaurant: IRestaurant) {
+        User.findById((<any>req).user._id, function(err, user: IUser){
+            console.log("We got the user")
+            Review.create({
+                restaurant_id: req.body.api_id,
+                user_id: (<any>req).user._id,
+                review: req.body.review,
+            },
+            function(err, review: IReview) {
+                console.log("review created", review)
+                user.reviews.push(review._id)
+                user.save()
+                restaurant.reviews.push(review._id)
+                restaurant.save()
                 res.json(user) 
             })
         })

@@ -41,14 +41,18 @@ router.get('/:id', (req, res) => {
 // POST review for a user and restaurant- 
 router.post('/', (req, res) => {
     console.log("Hitting the POST new review route")
+    console.log(req.body.api_id)
     console.log((<any>req).user._id)
-    Restaurant.findById(req.body.api_id, function(err, restaurant: IRestaurant) {
+    console.log(req.body.review)
+    Restaurant.findOne({api_id: req.body.api_id}, function(err, restaurant: IRestaurant) {
+        console.log(restaurant)
         User.findById((<any>req).user._id, function(err, user: IUser){
-            console.log("We got the user")
+            console.log("We got the user", user)
             Review.create({
-                restaurant_id: req.body.api_id,
-                user_id: (<any>req).user._id,
-                review: req.body.review,
+                restaurant_id: restaurant._id,
+                user_id: user._id,
+                user_name: user.name,
+                review: req.body.review
             },
             function(err, review: IReview) {
                 console.log("review created", review)

@@ -8,9 +8,9 @@ const restaurantSchema = new Schema({
 })
 
 export interface IRestaurant extends Document {
-    _id: String;
-    api_id: Number; 
-    name: String; 
+    _id: string;
+    api_id: number; 
+    name: string; 
     reviews: Array<string>;
 }
 

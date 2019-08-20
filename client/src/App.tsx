@@ -17,6 +17,10 @@ export interface ILiftToken {
   setToken: Function 
 }
 
+export interface IHomeProps {
+  token: String
+}
+
 
 const App: React.FC = () => {
   const [token, setToken] = useState<String>('')
@@ -94,7 +98,7 @@ const App: React.FC = () => {
             <Link to='/login' className='link'>Login</Link>
             <Link to='/signup' className='link'>Signup</Link>
           </nav>
-          <Route exact path='/' component={Home}/>
+          <Route exact path='/' render={(props) => <Home token={token}/>}/>
         {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>

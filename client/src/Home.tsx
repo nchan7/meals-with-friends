@@ -7,6 +7,7 @@ import {
 import axios from 'axios';
 import { number } from 'prop-types';
 import Details from './Details';
+import {IHomeProps} from './App';
 
 export interface ILocation {
   // name: string;
@@ -27,7 +28,7 @@ interface IAddress {
 }
 
 
-const Home: React.FC = () => { 
+const Home: React.FC<IHomeProps> = ({token}) => { 
   const [search, setSearch] = useState<string>('')
   const [restaurants, setRestaurants] = useState<ILocation[]>([])
   const [api_id, setApi_id] = useState<number>(0)
@@ -91,7 +92,7 @@ const Home: React.FC = () => {
           placeholder="Enter a location" /> <br/> <br/>
         <input type="submit" value="Go!" />
       </form>
-      <Route exact path='/details' render={() => <Details api_id={api_id} />}/>
+      <Route exact path='/details' render={() => <Details api_id={api_id} token={token} />}/>
       {restaurantData}
     </Router>
   );

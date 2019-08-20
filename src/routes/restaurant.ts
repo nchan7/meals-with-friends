@@ -64,6 +64,16 @@ router.post('/', (req, res) => {
 })
 
 
+// GET ALL reviews for a restaurant
+router.get('/reviews/:id', (req, res) => {
+  Restaurant.findOne({api_id: req.params.id}).populate('reviews').exec( (err,restaurant: IRestaurant)  => {
+    console.log(restaurant)  
+    if (err) res.json(err)
+    res.json(restaurant.reviews)
+  })
+})
+
+
 router.get('/:id', (req, res) => {
   let zomatoUrl = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${req.params.id}`
   let config = {
@@ -90,22 +100,8 @@ router.get('/:id', (req, res) => {
 // //     })
 // // });
 
-// // GET ALL reviews for a restaurant
-// router.get('/:id', (req, res) => {
-//     Review.findById(req.params.id, (err,review) => {
-//         if (err) res.json(err)
-//         // res.json(trip)
-//         // console.log(trip)
-//         // console.log(req.params.id)
-//         let zomatoUrl = `https://api.darksky.net/forecast/${process.env.DARK_SKY_API}/${trip.latStart},${trip.longStart}`
-//         // console.log('Almost at the axios call')
-//         axios.get(zomatoUrl).then(results => {
-//             console.log('Im in the axios call', results)
-//             res.json({results})
-//         }).catch(err => {
-//             res.send(err)
-//         })
-//     })
+
+
 
 //     // send an object with two keys with a res.json...
 

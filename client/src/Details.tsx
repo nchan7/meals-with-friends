@@ -26,23 +26,31 @@ interface IUserRating {
 
 
 interface IRestaurantProps {
-  api_id: number
+  api_id: number;
+  token: String;
 }
 
-const Details: React.FC<IRestaurantProps> = ({api_id}) => {
+const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
   // const [restaurant_id, setRestaurant_id] = useState<number>(0)
   const [restaurant, setRestaurant] = useState<IRestaurantDetails>({} as IRestaurantDetails)
   const [review, setReview] = useState<string>('')
-
-
+  const [reviews, setReviews] = useState<IReview[]>([])
   
   useEffect( () => {
-    console.log("Running the effect")
+    console.log("Running the first effect")
     axios.get(`/restaurants/${api_id}`).then( (response) => {
       console.log(response.data)
       setRestaurant(response.data);
     })
   }, [api_id])
+
+  useEffect( () => {
+    console.log("Running the second effect")
+    axios.get(`/restaurants/reviews/${api_id}`).then( (response) => {
+      console.log(response.data)
+      setReviews(response.data);
+    })
+  }, [reviews])
 
   function handleReviewChange(e: React.ChangeEvent<HTMLInputElement>) {
     setReview(e.target.value) 
@@ -50,18 +58,24 @@ const Details: React.FC<IRestaurantProps> = ({api_id}) => {
 
   function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault()
+    let config = {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    }
+    console.log("Restaurant ID", restaurant.id)
     axios.post('/reviews', {
       api_id: restaurant.id,
       review: review
-      }).then(res => {
+      }, config).then(res => {
           console.log(res.data)
       }).catch(err => {
           console.log("Error:", err)
       })
     console.log("it works!")
-}
+  }
 
-var restaurantDetails;
+  var restaurantDetails;
   if (restaurant !==null && Object.keys(restaurant).length > 0) {
       restaurantDetails = (
       <div className='restaurantdetails'>
@@ -75,6 +89,23 @@ var restaurantDetails;
       )
   } else {
     restaurantDetails = <p></p>
+  }
+
+  var reviewDetails;
+  if (reviews.length > 0) {
+    reviewDetails = reviews.map((review, i) => {
+      let timestamp = review._id.toString().substring(0,8)
+      let date = new Date( parseInt( timestamp, 16 ) * 1000 )
+      return (
+        <div key={i} className='review'>
+          <p>{review.review}</p>
+          <p>By: {review.user_name}</p>
+          <p>{date}</p>
+        </div>
+      )
+    })
+  } else {
+    reviewDetails = <p></p>
   }
 
 
@@ -92,6 +123,7 @@ return (
           placeholder="Add a review" /> <br/> <br/>
         <input type="submit" value="Submit" />
       </form>
+      {reviewDetails}
     </>
   )
 }

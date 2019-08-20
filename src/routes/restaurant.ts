@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
   Restaurant.findOne({api_id: req.body.api_id}, function(err, result) {
     if (!result) {
       Restaurant.create({
-        restaurant_id: req.body.api_id,
+        api_id: req.body.api_id,
         name: req.body.name,
       },
       function(err, restaurant: IRestaurant) {

@@ -3,6 +3,7 @@ import {IReview} from './review';
 
 const restaurantSchema = new Schema({
     api_id: Number,
+    name: String,
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
 

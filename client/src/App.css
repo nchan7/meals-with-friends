@@ -6,19 +6,23 @@ body {
 
 nav {
   text-align: right; 
-  margin: 5px;
+  margin: 0 3px 5px 3px;
+  background-color: rgba(169,169,169,0.8);
+  height: 30px; 
 }
 
 .link {
-  margin: 5px 10px; 
-  padding: 3px; 
-  color: rgb(206, 115, 115); 
-  border: 2px dashed #333333; 
+  margin: 5px 5px; 
+  padding: 10px; 
+  color: white; 
+  background-color: #E80000;
   border-radius: 5px;
+  text-decoration: none; 
+  font-weight: 600; 
 }
 
 .link:hover { 
-  background-color: black; 
+  background-color: #747373; 
 }
 
 .App {

@@ -35,6 +35,7 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
   const [restaurant, setRestaurant] = useState<IRestaurantDetails>({} as IRestaurantDetails)
   const [review, setReview] = useState<string>('')
   const [reviews, setReviews] = useState<IReview[]>([])
+  const [dependancy, setDependancy] = useState<number>(0)
   
   useEffect( () => {
     console.log("Running the first effect")
@@ -50,7 +51,7 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
       console.log(response.data)
       setReviews(response.data);
     })
-  }, [reviews])
+  }, [dependancy, api_id])
 
   function handleReviewChange(e: React.ChangeEvent<HTMLInputElement>) {
     setReview(e.target.value) 
@@ -69,10 +70,12 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
       review: review
       }, config).then(res => {
           console.log(res.data)
+          setDependancy(dependancy + 1);
       }).catch(err => {
           console.log("Error:", err)
       })
     console.log("it works!")
+    setReview('')
   }
 
   var restaurantDetails;
@@ -95,12 +98,12 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
   if (reviews.length > 0) {
     reviewDetails = reviews.map((review, i) => {
       let timestamp = review._id.toString().substring(0,8)
-      let date = new Date( parseInt( timestamp, 16 ) * 1000 )
+      // let date = new Date( parseInt( timestamp, 16 ) * 1000 )
       return (
         <div key={i} className='review'>
           <p>{review.review}</p>
           <p>By: {review.user_name}</p>
-          <p>{date}</p>
+          {/* <p>{date}</p> */}
         </div>
       )
     })
@@ -120,7 +123,7 @@ return (
           value={review}
           type="text"
           name="review"
-          placeholder="Add a review" /> <br/> <br/>
+          placeholder="Comment..." /> <br/> <br/>
         <input type="submit" value="Submit" />
       </form>
       {reviewDetails}

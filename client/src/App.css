@@ -11,9 +11,10 @@ nav {
 
 .link {
   margin: 5px 10px; 
-  color: white; 
-  background-color: rgba(100, 100, 100, .9);
-  border: 1px solid white; 
+  padding: 3px; 
+  color: rgb(206, 115, 115); 
+  border: 2px dashed #333333; 
+  border-radius: 5px;
 }
 
 .link:hover { 

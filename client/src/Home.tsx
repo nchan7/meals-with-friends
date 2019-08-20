@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {
-    Link
+    Link,
+    Route,
+    BrowserRouter as Router
     } from 'react-router-dom';
 import axios from 'axios';
 import { number } from 'prop-types';
+import Details from './Details';
 
 export interface ILocation {
   // name: string;
@@ -69,7 +72,7 @@ const Home: React.FC = () => {
           <h4>Hours: {restaurant.restaurant.timings}</h4>
           <h4>{restaurant.restaurant.cuisines}</h4>
           <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
-          <Link to={{pathname: "/details", state:{api_id: api_id}}}><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
+          <Link to={"/details"}><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
         </div>
       )
     })
@@ -78,7 +81,7 @@ const Home: React.FC = () => {
   }
 
   return(
-    <>
+    <Router>
       <h3>Where would you like to eat today?</h3>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearchChange}
@@ -88,8 +91,9 @@ const Home: React.FC = () => {
           placeholder="Enter a location" /> <br/> <br/>
         <input type="submit" value="Go!" />
       </form>
+      <Route exact path='/details' render={() => <Details api_id={api_id} />}/>
       {restaurantData}
-    </>
+    </Router>
   );
 }
 

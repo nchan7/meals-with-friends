@@ -41,11 +41,13 @@ import authRouter from './routes/auth';
 app.use('/auth', authRouter);
 
 import restaurantRouter from './routes/restaurant';
-app.use('/restaurants', expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}), restaurantRouter);
+// app.use('/restaurants', expressJWT({secret: process.env.JWT_SECRET}).unless({method: 'POST'}), restaurantRouter);
+app.use('/restaurants', restaurantRouter);
 //* Can include .unless to lock everything except certain verb: ".unless({method: 'POST'})"
 
 import reviewRouter from './routes/review';
-app.use('/reviews', expressJWT({secret: process.env.JWT_SECRET}), reviewRouter);
+app.use('/reviews', reviewRouter);
+// app.use('/reviews', expressJWT({secret: process.env.JWT_SECRET}), reviewRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`You're listening to port ${process.env.PORT}...`)

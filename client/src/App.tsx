@@ -3,7 +3,6 @@ import axios from 'axios';
 import Home from './Home';
 import Login from './Login';
 import Signup from './Signup';
-import Details from './Details';
 import User, {IUser} from '../../src/models/user';
 import {
   BrowserRouter as Router,
@@ -11,6 +10,7 @@ import {
   Link
 } from 'react-router-dom';
 import './App.css'
+import Details from './Details';
 
 
 export interface ILiftToken {
@@ -98,7 +98,6 @@ const App: React.FC = () => {
         {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>
-          <Route exact path='/details' render={(props) => <Details />}/>
         </Router>
       </div>
     );

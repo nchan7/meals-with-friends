@@ -1,4 +1,4 @@
-import express, {Request, Response} from 'express';
+import express from 'express';
 const router = express.Router(); 
 import mongoose from 'mongoose';
 import axios from 'axios';
@@ -21,7 +21,7 @@ router.use(express.urlencoded({extended: false}));
 
 
 // GET ALL reviews for a user
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (req, res) => {
     User.findById((<any>req).user._id).populate('reviews').exec( (err,user: IUser) => {
         console.log(user)
         if (err) res.json(err)
@@ -40,10 +40,9 @@ router.get('/:id', (req, res) => {
 
 // POST review for a user and restaurant- 
 router.post('/', (req, res) => {
-    console.log("Hitting the POST new review route");
-    console.log(req.body)
+    console.log("Hitting the POST new review route")
     console.log((<any>req).user._id)
-    Restaurant.findById(req.body.restaurant_id, function(err, restaurant: IRestaurant) {
+    Restaurant.findById(req.body.api_id, function(err, restaurant: IRestaurant) {
         User.findById((<any>req).user._id, function(err, user: IUser){
             console.log("We got the user")
             Review.create({

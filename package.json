@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "tsc",
-    "start": "node build/server.js"
+    "start": "node build/server.js",
+    "postinstall": "tsc",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "Nathan Chan",
   "license": "MIT",
@@ -20,7 +21,8 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.19.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.6.5"
+    "mongoose": "^5.6.5",
+    "typescript": "^3.5.3"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

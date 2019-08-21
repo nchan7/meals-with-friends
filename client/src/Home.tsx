@@ -73,7 +73,7 @@ const Home: React.FC<IHomeProps> = ({token}) => {
           <h4>Hours: {restaurant.restaurant.timings}</h4>
           <h4>{restaurant.restaurant.cuisines}</h4>
           <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
-          <Link to={"/details"}><button onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
+          <Link to={"/details"}><button className='button2' onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
         </div>
       )
     })

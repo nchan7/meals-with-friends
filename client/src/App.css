@@ -41,7 +41,21 @@ nav {
 }
 
 .button:hover {
-  background-color: #747373; 
+  background-color: #555555; 
+}
+
+.button2 {
+  background-color: #E80000;
+  color: white; 
+  font-weight: 600;
+  height: 25px;
+  width: 150px;
+  border-radius: 5px;
+  font-size: 14px; 
+}
+
+.button2:hover {
+  background-color: #555555; 
 }
 
 .thumb {

@@ -74,19 +74,16 @@ interface IModelToObject {
 }
 
 export interface IReview {
-    _id?: String;
-    review: String;
-}
-
-interface IFriend {
+    _id?: string;
+    review: string;
 }
 
 export interface IUser extends mongoose.Document{
-    _id: String;
-    name: String;
-    email: String;
-    password: String;
-    friends: IFriend;
+    _id: string;
+    name: string;
+    email: string;
+    password: string;
+    friends: Array<string>;
     reviews: Array<string>;
     authenticated: IAuthenticated;
     toObject: IModelToObject;

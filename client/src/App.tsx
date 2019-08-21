@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import './App.css'
 import Details from './Details';
+import Friends from './Friends';
 
 
 export interface ILiftToken {
@@ -97,8 +98,10 @@ const App: React.FC = () => {
             <Link to='/' className='link'>Home</Link>
             <Link to='/login' className='link'>Login</Link>
             <Link to='/signup' className='link'>Signup</Link>
+            <Link to='/friends' className='link'>Connect</Link>
           </nav>
           <Route exact path='/' render={(props) => <Home token={token}/>}/>
+          <Route exact path='/friends' component={Friends}/> 
         {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>

@@ -6,6 +6,12 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 
+router.get('/users', (req, res) => {
+    User.find({}, function(err, users) {
+        res.json(users)
+    })
+})
+
 //* Route for signup
 router.post('/signup', (req, res) => {
     //: see if email is already in database
@@ -62,6 +68,14 @@ router.post('/login', (req, res) => {
     })
 })
 
+router.post('/friends', (req, res) => {
+    User.findById((<any>req).user._id, function(err, user:IUser) {
+        user.friends.push(req.body.friend_id)
+        user.save()
+        res.json(user)
+    }) 
+})
+
 
 
 //* Route for validating tokens
@@ -86,20 +100,18 @@ router.post('/me/from/token', (req, res) => {
                     } else {
                         // if user does exist, send back user and token
                         //* We could sign a new token or we could just return the existing one
-
                         //* var token = jwt.sign(user.toObject(), process.env.JWT_SECRET, {
                         //*     expiresIn: '1d'
                         //* })
                         
                         res.json({type: 'success', user: user.toObject(), token})
                     }
-
                 })
-
             }
         })
     }
 }) 
+
 
 
 export default router; 

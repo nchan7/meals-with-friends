@@ -83,15 +83,17 @@ const Home: React.FC<IHomeProps> = ({token}) => {
 
   return(
     <Router>
-      <h2>Where would you like to eat today?</h2>
-      <form onSubmit={handleSubmit}>
-        <input onChange={handleSearchChange}
-          value={search}
-          type="search"
-          name="searchLocation"
-          placeholder="Enter a location" /> <br/> <br/>
-        <input className="button" type="submit" value="Go!" />
-      </form>
+      <div className='home'>
+        <h2>Where would you like to eat today?</h2>
+        <form onSubmit={handleSubmit}>
+          <input className='search' onChange={handleSearchChange}
+            value={search}
+            type="search"
+            name="searchLocation"
+            placeholder="Enter a location" />
+          <input className="button" type="submit" value="Go!" />
+        </form>
+      </div>
       <Route exact path='/details' render={() => <Details api_id={api_id} token={token} />}/>
       {restaurantData}
     </Router>

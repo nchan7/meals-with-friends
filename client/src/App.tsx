@@ -95,7 +95,7 @@ const App: React.FC = () => {
       <div className="App">
         <Router>
           <nav>
-            <Link to='/' className='link'>Home</Link>
+            <Link to='/' className='linkleft'>Meals With Friends</Link>
             <Link to='/login' className='link'>Login</Link>
             <Link to='/signup' className='link'>Signup</Link>
             <Link to='/friends' className='link'>Connect</Link>

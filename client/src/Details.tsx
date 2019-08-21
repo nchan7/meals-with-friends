@@ -94,8 +94,8 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
   if (restaurant !==null && Object.keys(restaurant).length > 0) {
       restaurantDetails = (
       <div className='restaurantdetails'>
-        <h2>{restaurant.name}</h2>
         <img className="thumb" src={`${restaurant.thumb}`} alt=""/>
+        <h2>{restaurant.name}</h2>
         <h4>Address: {restaurant.location.address}</h4>
         <h4>Hours: {restaurant.timings}</h4>
         <h4>{restaurant.cuisines}</h4>
@@ -112,7 +112,7 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
       let timestamp = review._id.toString().substring(0,8)
       // let date = new Date( parseInt( timestamp, 16 ) * 1000 )
       return (
-        <div key={i} className='review'>
+        <div key={i} className='reviewdetails'>
           <p>{review.review}</p>
           <p>By: {review.user_name}</p>
           {/* <p>{date}</p> */}
@@ -130,15 +130,17 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
 return (
     <>
       {restaurantDetails}
-      <h3>Add a Review</h3>
-      <form onSubmit={handleReviewSubmit}>
-        <input onChange={handleReviewChange}
-          value={review}
-          type="text"
-          name="review"
-          placeholder="Comment..."/> <br/> <br/>
-        <input className="button" type="submit" value="Submit" />
-      </form>
+      <div className="review">
+        <h3>Add a Review</h3>
+        <form onSubmit={handleReviewSubmit}>
+          <input onChange={handleReviewChange}
+            value={review}
+            type="text"
+            name="review"
+            placeholder="Comment..."/> <br/> <br/>
+          <input className="button" type="submit" value="Submit" />
+        </form>
+      </div>
       {reviewDetails}
     </>
   )

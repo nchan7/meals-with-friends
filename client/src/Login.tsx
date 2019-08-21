@@ -51,7 +51,7 @@ const Login: React.FC<ILiftToken> = ({setToken}) => {
                         type="password"
                         name="password"
                         placeholder="Enter your password..." /><br />
-                <input type="submit" value="Log in!" />
+                <input className="button" type="submit" value="Log in!" />
             </form>
         </div>
     );

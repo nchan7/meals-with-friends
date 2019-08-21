@@ -77,18 +77,18 @@ const App: React.FC = () => {
     var contents 
     if (Object.keys(user).length > 0) {
       contents = (
-        <>
-          <p>Hello, {user.name}</p>
-          <p onClick={logout}>Logout!</p>
-        </>
+        <div className="register">
+          <h4>Hello, {user.name}</h4>
+          <h5 className="logout" onClick={logout}>Logout!</h5>
+        </div>
       );
     } else {
       contents = (
-        <>
-          <p>Please signup or login</p>
+        <div className="register">
+          <h5>Please signup or login</h5>
           {/* <Login setToken={setToken} />
           <Signup setToken={setToken} /> */}
-        </>
+        </div>
       );
     }
     return (
@@ -100,9 +100,9 @@ const App: React.FC = () => {
             <Link to='/signup' className='link'>Signup</Link>
             <Link to='/friends' className='link'>Connect</Link>
           </nav>
+          {contents}
           <Route exact path='/' render={(props) => <Home token={token}/>}/>
           <Route exact path='/friends' component={Friends}/> 
-        {/* {contents} */}
           <Route exact path='/login' render={(props) => <Login setToken={setToken}/>}/>
           <Route exact path='/signup' render={(props) => <Signup setToken={setToken}/>}/>
         </Router>

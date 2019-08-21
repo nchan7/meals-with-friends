@@ -49,9 +49,8 @@ const Friends: React.FC = () => {
         <div className='users' key={i}>
           <h3>{user.name}</h3>
           <h4>{user.email}</h4>
-          <button onClick={() => handleFriendAdd(user._id)}> Add Friend</button> <br/>
-          <button onClick={() => handleFriendRemove(user._id)}> Remove Friend</button>
-
+          <button className="button2" onClick={() => handleFriendAdd(user._id)}> Add Friend</button> <br/><br/>
+          {/* <button className="button2" onClick={() => handleFriendRemove(user._id)}> Remove Friend</button> */}
         </div>
       )
     })
@@ -60,9 +59,9 @@ const Friends: React.FC = () => {
   }
 
   return (
-    <>
+    <div className = 'friends'>
       {userList}
-    </>
+    </div>
   );
 }
 

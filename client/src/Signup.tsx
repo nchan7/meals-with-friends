@@ -64,7 +64,7 @@ const Signup: React.FC<ILiftToken> = ({setToken}) => {
                         type='password'
                         name='password'
                         placeholder='Choose a password...'/> <br/>
-                <input type="submit" value='Sign up!'/>
+                <input className="button" type="submit" value='Sign up!'/>
             </form>
         </div>
     );

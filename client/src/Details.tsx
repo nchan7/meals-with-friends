@@ -78,6 +78,18 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
     setReview('')
   }
 
+  function handleReviewDelete(review_id: string) {
+    let config = {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    }
+    axios.delete(`/reviews/${review_id}`, config).then((response) => {
+      console.log(response.data)
+    })
+    setDependancy(dependancy - 1);
+  }
+
   var restaurantDetails;
   if (restaurant !==null && Object.keys(restaurant).length > 0) {
       restaurantDetails = (
@@ -104,6 +116,7 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
           <p>{review.review}</p>
           <p>By: {review.user_name}</p>
           {/* <p>{date}</p> */}
+          <button className='button2' onClick={() => handleReviewDelete(review._id)}>Delete Review</button>
         </div>
       )
     })

@@ -80,6 +80,15 @@ router.post('/friends', (req, res) => {
     })
 })
 
+// router.delete('/friends/:id', (req, res) => {
+//     User.findById((<any>req).user._id, function(err, user:IUser) {
+//         user.friends.pull(req.params.id)
+//         user.save(function(err, user) {
+//             if (err) res.json(err);
+//             res.json({type: 'success', message: 'You deleted one trip', user})
+//     })
+// })
+
 
 
 //* Route for validating tokens

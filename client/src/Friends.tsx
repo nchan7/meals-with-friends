@@ -31,14 +31,27 @@ const Friends: React.FC = () => {
     })
   }
 
+  function handleFriendRemove(friend_id: string) {
+    var token = localStorage.getItem('mernToken')
+    axios.delete(`/auth/friends/${friend_id}`, {
+    }).then(res => {
+      console.log(res.data)
+    }).catch(err => {
+      console.log("ERROR!", err)
+    })
+  }
+
+  
   var userList;
   if (users !==null && Object.keys(users).length > 0) {
     userList = users.map((user, i) => {
       return (
-        <div key={i}>
+        <div className='users' key={i}>
           <h3>{user.name}</h3>
           <h4>{user.email}</h4>
-          <button onClick={() => handleFriendAdd(user._id)}> Add Friend</button>
+          <button onClick={() => handleFriendAdd(user._id)}> Add Friend</button> <br/>
+          <button onClick={() => handleFriendRemove(user._id)}> Remove Friend</button>
+
         </div>
       )
     })

@@ -83,25 +83,26 @@ router.put('/:id', (req, res) => {
 
 // DELETE review for a user
 // Pull from user and then remove from Reviews 
-// router.delete('/:id', (req, res) => {
-//     User.findById((<any>req).user._id).populate('reviews').exec(function(err, user: IUser) {
-//         user.reviews.pull(req.params.id);
-//             user.save(function(err, user) {
-//                 if (err) res.json(err);
-//                 res.json({type: 'success', message: 'You deleted one trip', user})
-//         Review.findOneAndRemove({
-//             _id: req.params.id
-//         },
-//         function(err, review) {
-//             // todo after delete trip, pull the trip id from the user as well
-//             user.reviews.pull(req.params.id);
-//             user.save(function(err, user) {
-//                 if (err) res.json(err);
-//                 res.json({type: 'success', message: 'You deleted one trip', user})
+router.delete('/:id', (req, res) => {
+    User.findById((<any>req).user._id).populate('reviews').exec(function(err, user: IUser) {
+        let index = user.reviews.indexOf(req.params.id)
+        user.reviews.splice(index,1)
+        user.save(function(err, user) {
+            if (err) res.json(err);
+            res.json({type: 'success', message: 'You deleted one review', user})
+        Review.findOneAndRemove({
+            _id: req.params.id
+        },
+        function(err, review) {
+            // user.reviews.pull(req.params.id);
+            // user.save(function(err, user) {
+            if (err) res.json(err);
+            res.json({type: 'success', message: 'You deleted one review', review})
                 
-//             })
-//         })
-//     })
-// })
+        })
+    })
+})
+
+})
 
 export default router; 

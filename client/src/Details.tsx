@@ -87,7 +87,7 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
     axios.delete(`/reviews/${review_id}`, config).then((response) => {
       console.log(response.data)
     })
-    setDependancy(dependancy - 1);
+    setDependancy(dependancy + 1);
   }
 
   var restaurantDetails;

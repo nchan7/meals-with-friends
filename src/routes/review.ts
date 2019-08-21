@@ -87,22 +87,19 @@ router.delete('/:id', (req, res) => {
     User.findById((<any>req).user._id).populate('reviews').exec(function(err, user: IUser) {
         let index = user.reviews.indexOf(req.params.id)
         user.reviews.splice(index,1)
-        user.save(function(err, user) {
-            if (err) res.json(err);
-            res.json({type: 'success', message: 'You deleted one review', user})
-        Review.findOneAndRemove({
+        user.save()
+        if (err) res.json(err);
+        res.json({type: 'success', message: 'You deleted one review', user})
+        Review.deleteOne({
             _id: req.params.id
         },
-        function(err, review) {
+        function(err) {
             // user.reviews.pull(req.params.id);
             // user.save(function(err, user) {
             if (err) res.json(err);
-            res.json({type: 'success', message: 'You deleted one review', review})
                 
         })
     })
-})
-
 })
 
 export default router; 

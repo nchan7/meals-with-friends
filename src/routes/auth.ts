@@ -69,11 +69,15 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/friends', (req, res) => {
-    User.findById((<any>req).user._id, function(err, user:IUser) {
-        user.friends.push(req.body.friend_id)
-        user.save()
-        res.json(user)
-    }) 
+    console.log(req.body.token)
+    var token = req.body.token; 
+    jwt.verify(token, process.env.JWT_SECRET as string, (err, user: IUser) => {
+        User.findById(user._id, function(err, user:IUser) {
+            user.friends.push(req.body.friend_id)
+            user.save()
+            res.json(user)
+        }) 
+    })
 })
 
 

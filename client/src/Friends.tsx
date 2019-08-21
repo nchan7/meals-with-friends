@@ -10,7 +10,7 @@ const Friends: React.FC = () => {
 
   useEffect ( () =>  {
     console.log("running first effect in Friends");
-
+    
     axios.get('/auth/users').then((response) => {
       console.log("Here are my users", response.data)
       setUsers(response.data)
@@ -20,7 +20,9 @@ const Friends: React.FC = () => {
   }, [])
 
   function handleFriendAdd(friend_id: string) {
+    var token = localStorage.getItem('mernToken')
     axios.post('/auth/friends', {
+      token: token,
       friend_id: friend_id
     }).then(res => {
       console.log(res.data)

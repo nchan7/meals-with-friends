@@ -49,7 +49,7 @@ Screenshots of the planning and design are shown below:
 
 Wireframes: 
 
-<img src="./client/src/img/Whiteboard.jpg" height = 200px width = 400px>
+<img src="./client/src/img/Whiteboarding.jpg" height = 200px width = 400px>
 
 Models: 
 
@@ -77,9 +77,7 @@ The wireframes were used as a starting point for rendering the appropriate data 
 ## Challenges
 The greatest challenge throughout the duration of this project was the usage of Typescript. According to Wikipedia, "Typescript is a strict syntactical superset of JavaScript, and adds optional static typing to the language. TypeScript is designed for development of large applications and transcompiles to JavaScript."
 
-The benefit of using something like Typescript is the ability to catch errors prior to testing and development. 
-
-However, the greatest challenge is that if there are any errors at all due to an incorrect typing then the app will not compile. 
+The benefit of using something like Typescript is the ability to catch errors prior to testing and development. However, the greatest challenge is that if there are any errors at all due to an incorrect typing then the app will not compile. 
 
 In particular, typing objects and functions are the most challenging aspect of Typescript because each model, object, and React functional component generally requires an interface. The interface allows a user to define the shape of the object or what props a functional component will need. In order for this to happen the developer needs to be very clear how different models, objects, components, and interfaces are linked. 
 

@@ -1,7 +1,11 @@
 body {
   text-align: center;
   margin: 0 auto; 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-image: url('./img/Restaurant.jpg');
+  background-size: cover;
+  background-attachment: fixed; 
+  color: white; 
 }
 
 nav {
@@ -19,10 +23,30 @@ nav {
   border-radius: 5px;
   text-decoration: none; 
   font-weight: 600; 
+  font-size: 16px; 
 }
 
 .link:hover { 
   background-color: #747373; 
+}
+
+.button {
+  background-color: #E80000;
+  color: white; 
+  font-weight: 600;
+  height: 40px;
+  width: 80px;
+  border-radius: 5px;
+  font-size: 20px; 
+}
+
+.button:hover {
+  background-color: #747373; 
+}
+
+.thumb {
+  border-radius: 120px;
+  border: 8px solid white; 
 }
 
 .App {

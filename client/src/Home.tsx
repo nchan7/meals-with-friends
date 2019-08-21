@@ -68,7 +68,7 @@ const Home: React.FC<IHomeProps> = ({token}) => {
     restaurantData = restaurants.map((restaurant, i) => {
       return (
         <div key={i} className='restaurant'>
-          <h3>{restaurant.restaurant.name}</h3>
+          <h2>{restaurant.restaurant.name}</h2>
           <h4>Address: {restaurant.restaurant.location.address}</h4>
           <h4>Hours: {restaurant.restaurant.timings}</h4>
           <h4>{restaurant.restaurant.cuisines}</h4>
@@ -83,14 +83,14 @@ const Home: React.FC<IHomeProps> = ({token}) => {
 
   return(
     <Router>
-      <h3>Where would you like to eat today?</h3>
+      <h2>Where would you like to eat today?</h2>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearchChange}
           value={search}
           type="search"
           name="searchLocation"
           placeholder="Enter a location" /> <br/> <br/>
-        <input type="submit" value="Go!" />
+        <input className="button" type="submit" value="Go!" />
       </form>
       <Route exact path='/details' render={() => <Details api_id={api_id} token={token} />}/>
       {restaurantData}

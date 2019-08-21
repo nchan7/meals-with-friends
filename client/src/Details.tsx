@@ -82,8 +82,8 @@ const Details: React.FC<IRestaurantProps> = ({api_id, token}) => {
   if (restaurant !==null && Object.keys(restaurant).length > 0) {
       restaurantDetails = (
       <div className='restaurantdetails'>
-        <h3>{restaurant.name}</h3>
-        <img src={`${restaurant.thumb}`} alt=""/>
+        <h2>{restaurant.name}</h2>
+        <img className="thumb" src={`${restaurant.thumb}`} alt=""/>
         <h4>Address: {restaurant.location.address}</h4>
         <h4>Hours: {restaurant.timings}</h4>
         <h4>{restaurant.cuisines}</h4>
@@ -123,8 +123,8 @@ return (
           value={review}
           type="text"
           name="review"
-          placeholder="Comment..." /> <br/> <br/>
-        <input type="submit" value="Submit" />
+          placeholder="Comment..."/> <br/> <br/>
+        <input className="button" type="submit" value="Submit" />
       </form>
       {reviewDetails}
     </>

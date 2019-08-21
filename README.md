@@ -1,7 +1,7 @@
 # Meals with Friends
 ## Nathan Chan | August 21, 2019
 ### General Assembly - Software Engineering Immersive Project 4: HTML, CSS, Javascript, Node.js, Express,js, React.js, Typescript, MongoDB, Mongoose
-#### Check out a demo of the site here: 
+#### Check out a demo of the site here: https://fast-coast-15974.herokuapp.com/
 
 ## Introduction
 Can't trust reviews online? Meals With Friends combines the best features of Facebook and Yelp to provide a platform that allows a user to increase his/her social network and food option at the same time. Only friends can see each other's posts. So you can be honest about what you're posting and you'll be able to make better decisions when you're looking for the next best restaurant. 
@@ -104,6 +104,7 @@ Thanks to Steve Peters, Mike Shull, Kelsey Cox, and many others in the SEI-SEA-2
 ## Next Steps / Wish List
 Some next steps and wish list features for this project include: 
 * Profile page and the ability to update personal info
+* Displaying locations on a map
 * Additional styling
 * Reorganization of the file structure and code to optimize for better Typescript and React organization
 * The ability to remove friends as well as the ability to only show one friend

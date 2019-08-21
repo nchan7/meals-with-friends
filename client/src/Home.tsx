@@ -67,13 +67,15 @@ const Home: React.FC<IHomeProps> = ({token}) => {
   if (restaurants !==null && Object.keys(restaurants).length > 0) {
     restaurantData = restaurants.map((restaurant, i) => {
       return (
-        <div key={i} className='restaurant'>
-          <h2>{restaurant.restaurant.name}</h2>
-          <h4>Address: {restaurant.restaurant.location.address}</h4>
-          <h4>Hours: {restaurant.restaurant.timings}</h4>
-          <h4>{restaurant.restaurant.cuisines}</h4>
-          <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
-          <Link to={"/details"}><button className='button2' onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
+        <div className='restaurantcontainer'>
+          <div key={i} className='restaurant'>
+            <h2>{restaurant.restaurant.name}</h2>
+            <h4>Address: {restaurant.restaurant.location.address}</h4>
+            <h4>Hours: {restaurant.restaurant.timings}</h4>
+            <h4>{restaurant.restaurant.cuisines}</h4>
+            <p>Average Cost for Two: ${restaurant.restaurant.average_cost_for_two}</p>
+            <Link to={"/details"}><button className='button2' onClick={() => handleRestaurantSubmit(restaurant.restaurant.id, restaurant.restaurant.name) }>See More Details</button></Link>  <br/> <br/>
+          </div>
         </div>
       )
     })
